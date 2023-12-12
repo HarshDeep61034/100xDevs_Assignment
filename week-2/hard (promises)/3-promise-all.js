@@ -4,7 +4,7 @@
  * Return a promise.all which return the time in milliseconds it takes to complete the entire operation.
  */
 
-function wait1(t){
+function wait1(t) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
@@ -29,17 +29,12 @@ function wait3(t) {
 }
 
 function calculateTime(t1, t2, t3) {
-let iTime = new Date();
-  return new Promise((resolve, reject)=>{
-  wait1(t1).then(()=>{
-  wait2(t2).then(()=>{
-  wait3(t3).then(()=>{
-  let fTime = new Date();
-  let df = fTime - iTime;
-  resolve(df);
-  })
-  })
-  })
+  let iTime = new Date();
+  return Promise.all([wait1(t1), wait2(t2), wait3(t3)]).then(() => {
+    let fTime = new Date();
+    let df = fTime - iTime;
+    return df;
+  });
 }
 
 module.exports = calculateTime;
